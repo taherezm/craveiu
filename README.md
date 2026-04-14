@@ -1,40 +1,114 @@
 # CraveIU
 
-A dining recommendation app for IU Bloomington students — ranks campus dining halls in real time based on your food preferences.
+**Stop checking every dining hall menu. CraveIU tells you exactly where to eat.**
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
+
+## The Problem
+
+IU Bloomington has 5 dining halls, each with menus that change every meal period. Students waste time checking each one manually, only to show up and find nothing they want to eat.
+
+## The Solution
+
+CraveIU ingests menus from all 5 dining halls, normalizes the food items, and ranks each hall in real time based on your personal food preferences. You set what you want, what you'd like, and what to avoid — CraveIU does the rest.
+
+---
+
+## Features
+
+- **Personalized rankings** — halls are scored and ranked based on your saved preferences every time you open the app
+- **Food preference editor** — mark foods as must-have, nice-to-have, or avoid, with weighted scoring applied to each
+- **Match explanations** — see exactly why a hall is ranked where it is (e.g. *"McNutt has chicken tenders, fries, and cookies at lunch"*)
+- **Menu search** — search across all dining halls for a specific food
+- **Meal period awareness** — rankings adjust based on whether it's breakfast, lunch, or dinner
+- **Hall detail pages** — view the full menu for any dining hall
+- **Notifications** — set alerts for when a specific food is being served
+- **Admin panel** — monitor ingestion health and trigger manual menu syncs
+
+---
+
+## Dining Halls
+
+| Hall | Known For |
+|------|-----------|
+| Collins Eatery | Great breakfast, solid basics |
+| Forest Dining Hall | Most diverse, global options |
+| Goodbody Hall Eatery | Healthy-forward, good salads |
+| McNutt Dining Hall | Comfort food |
+| Wright Dining Hall | Late-night favorite, pizza & grill |
+
+---
+
+## How It's Built
+
+**Stack**
+- [Next.js 16](https://nextjs.org) (App Router) — server and client components, API routes
+- TypeScript — strict mode throughout
+- Tailwind CSS v4 + Radix UI — styling and accessible UI primitives
+- Drizzle ORM + Supabase (PostgreSQL) — type-safe schema and hosted database
+- TanStack Query — client-side data fetching and caching
+- Zod — runtime validation on all API routes
+- Vitest — unit tests
+
+**Normalization Engine**
+
+Raw menu item names from different halls are inconsistent. The normalization engine maps any name to a canonical food using keyword matching and fuzzy similarity scoring. For example:
+- `"Applewood Smoked Bacon"` → `bacon`
+- `"Crispy Chicken Tenders"` → `chicken_tenders`
+- `"Smashburger"` → `burgers`
+
+**Ranking Engine**
+
+Each dining hall is scored per user session using a weighted rules system:
+
+| Rule | Points |
+|------|--------|
+| Must-have item present | +10 |
+| Nice-to-have item present | +5 |
+| Avoided item present | -8 |
+| 3+ positive matches | +3 bonus |
+| Item in current meal period | +2 per item |
+| 2+ matches in same food category | +2 cluster bonus |
+
+**Ingestion Layer**
+
+Menus are pulled through an adapter interface, making it easy to swap between a mock adapter (deterministic per date, used in development) and the live IU Dining adapter. A scheduler orchestrates full ingest runs and deduplicates entries via source hash.
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/taherezm/craveiu.git
+cd craveiu
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env.local` file:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Push the database schema and seed it:
+```bash
+npm run db:push
+npm run seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm test
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Covers normalization, ranking, and menu parsing logic.
