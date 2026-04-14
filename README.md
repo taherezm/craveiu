@@ -1,3 +1,7 @@
+# CraveIU
+
+A dining recommendation app for IU Bloomington students — ranks campus dining halls in real time based on your food preferences.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
