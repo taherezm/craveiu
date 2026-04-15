@@ -4,11 +4,6 @@
 
 ---
 
-## The Problem
-
-IU Bloomington has 5 dining halls, each with menus that change every meal period. Students waste time checking each one manually, only to show up and find nothing they want to eat.
-
-## The Solution
 
 CraveIU ingests menus from all 5 dining halls, normalizes the food items, and ranks each hall in real time based on your personal food preferences. You set what you want, what you'd like, and what to avoid — CraveIU does the rest.
 
