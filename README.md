@@ -1,7 +1,5 @@
 # CraveIU
 
-**Stop checking every dining hall menu. CraveIU tells you exactly where to eat.**
-
 ---
 
 
