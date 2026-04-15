@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode */
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #0f0f0f;
@@ -12,6 +15,17 @@
   --border: #e4e4e7;
   --card: #ffffff;
   --radius: 0.75rem;
+}
+
+.dark {
+  --background: #0f0f0f;
+  --foreground: #fafafa;
+  --secondary: #1c1c1e;
+  --secondary-foreground: #e4e4e7;
+  --muted: #1c1c1e;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --card: #141414;
 }
 
 @theme inline {
