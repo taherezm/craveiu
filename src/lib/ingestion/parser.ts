@@ -20,7 +20,6 @@ export interface ParsedMenuItem {
   normalizedName: string;
   canonicalFood: string | null;
   category: string | null;
-  confidence: number;
   isVegetarian?: boolean;
   isVegan?: boolean;
   isGlutenFree?: boolean;
@@ -46,10 +45,6 @@ export interface ParsedMenu {
   stations: ParsedStation[];
   /** SHA-256 of the raw content — used to skip duplicate ingestion. */
   sourceHash: string;
-  /** Average confidence across all items (0-1). */
-  parseConfidence: number;
-  /** Number of items that failed to normalize (confidence < 0.3). */
-  lowConfidenceCount: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -58,21 +53,14 @@ export interface ParsedMenu {
 
 export function parseRawMenu(raw: RawMenuData): ParsedMenu {
   const stations: ParsedStation[] = [];
-  const confidences: number[] = [];
 
   for (const rawStation of raw.stations) {
-    const parsedItems: ParsedMenuItem[] = rawStation.items.map((item) =>
-      parseItem(item, confidences),
-    );
+    // Filter out condiments, sauces, and spices — only keep actual food items.
+    const parsedItems: ParsedMenuItem[] = rawStation.items
+      .map(parseItem)
+      .filter((item) => item !== null) as ParsedMenuItem[];
     stations.push({ name: rawStation.name, items: parsedItems });
   }
-
-  const avg =
-    confidences.length > 0
-      ? confidences.reduce((a, b) => a + b, 0) / confidences.length
-      : 0;
-
-  const lowConfidenceCount = confidences.filter((c) => c < 0.3).length;
 
   return {
     hallName: raw.hallName,
@@ -80,8 +68,6 @@ export function parseRawMenu(raw: RawMenuData): ParsedMenu {
     mealPeriod: raw.mealPeriod,
     stations,
     sourceHash: computeHash(raw),
-    parseConfidence: Math.round(avg * 1000) / 1000,
-    lowConfidenceCount,
   };
 }
 
@@ -93,16 +79,19 @@ export function parseRawMenus(raws: RawMenuData[]): ParsedMenu[] {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function parseItem(item: RawMenuItemData, confidences: number[]): ParsedMenuItem {
+/**
+ * Returns null for condiments/sauces/spices so they are filtered out.
+ */
+function parseItem(item: RawMenuItemData): ParsedMenuItem | null {
   const norm = normalizeItem(item.name);
-  confidences.push(norm.confidence);
+
+  if (norm.isCondiment) return null;
 
   return {
     rawName: item.name,
     normalizedName: norm.normalizedName,
     canonicalFood: norm.canonicalFood,
     category: norm.category,
-    confidence: norm.confidence,
     isVegetarian: item.isVegetarian,
     isVegan: item.isVegan,
     isGlutenFree: item.isGlutenFree,

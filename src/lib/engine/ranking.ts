@@ -75,10 +75,10 @@ export function rankHalls(params: RankHallsParams): HallRanking[] {
   for (const [hallId, hall] of menusByHall.entries()) {
     const { hallName, items } = hall;
 
-    // Normalize every menu item once.
-    const normalizedMenu: { raw: MenuItem; norm: NormalizedItem }[] = items.map(
-      (item) => ({ raw: item, norm: normalizeItem(item.name) }),
-    );
+    // Normalize every menu item once, filtering out condiments/sauces/spices.
+    const normalizedMenu: { raw: MenuItem; norm: NormalizedItem }[] = items
+      .map((item) => ({ raw: item, norm: normalizeItem(item.name) }))
+      .filter((entry) => !entry.norm.isCondiment);
 
     const matchedItems: MatchedItem[] = [];
     const avoidedItems: AvoidedItem[] = [];
@@ -153,20 +153,10 @@ export function rankHalls(params: RankHallsParams): HallRanking[] {
       }
     }
 
-    // Confidence: ratio of matchable preferences that were actually matched.
-    const positivePrefs = resolvedPrefs.filter(
-      (p) => p.weight !== "avoid" && p.canonical !== null,
-    );
-    const confidence =
-      positivePrefs.length > 0
-        ? Math.round((matchedItems.length / positivePrefs.length) * 100) / 100
-        : 0;
-
     results.push({
       hallId,
       hallName,
       totalScore: score,
-      confidence: Math.min(confidence, 1),
       matchedItems,
       avoidedItems,
       explanation: generateExplanation(hallName, matchedItems, avoidedItems, mealPeriod),
@@ -174,10 +164,10 @@ export function rankHalls(params: RankHallsParams): HallRanking[] {
     });
   }
 
-  // Sort by score descending, then by confidence descending as tiebreaker.
+  // Sort by score descending, then by number of matched items as tiebreaker.
   results.sort((a, b) => {
     if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
-    return b.confidence - a.confidence;
+    return b.matchedItems.length - a.matchedItems.length;
   });
 
   return results;

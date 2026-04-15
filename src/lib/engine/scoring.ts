@@ -70,8 +70,6 @@ export interface ScoreResult {
   hallName: string;
   /** Final computed score for this hall. */
   totalScore: number;
-  /** Confidence that the score is meaningful (0-1). */
-  confidence: number;
   /** Items the user wanted that were found in this hall. */
   matchedItems: MatchedItem[];
   /** Items the user wanted to avoid that were found in this hall. */

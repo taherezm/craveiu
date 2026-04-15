@@ -17,8 +17,8 @@ export interface NormalizedItem {
   canonicalFood: string | null;
   /** The food category (e.g. "comfort"), or null if no match. */
   category: string | null;
-  /** Match confidence 0-1.  1 = exact keyword hit, lower = fuzzy. */
-  confidence: number;
+  /** True if this item is a condiment, sauce, or spice — should be excluded from display. */
+  isCondiment: boolean;
 }
 
 export type FoodCategory =
@@ -29,6 +29,59 @@ export type FoodCategory =
   | "dessert"
   | "healthy"
   | "international";
+
+// ---------------------------------------------------------------------------
+// Condiment / sauce / spice blocklist
+// ---------------------------------------------------------------------------
+
+/**
+ * Patterns that identify condiments, sauces, dressings, and spices.
+ * Items matching any of these should be excluded from menu display and scoring.
+ */
+const CONDIMENT_PATTERNS: RegExp[] = [
+  // ends with "sauce" (teriyaki sauce, yumm sauce, hot sauce, buffalo sauce, etc.)
+  /\bsauce$/,
+  // standalone dressings
+  /\bdressing\b/,
+  // vinaigrettes
+  /\bvinaigrette\b/,
+  // explicit condiments
+  /\bketchup\b/,
+  /\bmustard\b/,
+  /\bmayonnaise\b/,
+  /\b mayo\b/,
+  /\brelish\b/,
+  /\baioli\b/,
+  /\bsriracha\b/,
+  /\bworcestershire\b/,
+  /\bhoison\b/,
+  /\btartar\b/,
+  // spices / seasonings
+  /\bseasoning\b/,
+  /\bspice blend\b/,
+  /\bherb blend\b/,
+  /\bsalt and pepper\b/,
+  /\bsalt & pepper\b/,
+  // spreads / toppings
+  /\bjam\b/,
+  /\bjelly\b/,
+  /\bpreserve\b/,
+  /\bhoney\b/,
+  /\bmaple syrup\b/,
+  /\bsyrup$/,
+  /\bmargarine\b/,
+  // standalone butter (not "peanut butter sandwich" etc.)
+  /^butter$/,
+  /^butter pat$/,
+];
+
+/**
+ * Returns true if the item name is a condiment, sauce, or spice
+ * that should be excluded from display and scoring.
+ */
+function checkIsCondiment(name: string): boolean {
+  return CONDIMENT_PATTERNS.some((pattern) => pattern.test(name));
+}
 
 // ---------------------------------------------------------------------------
 // Synonym dictionary
@@ -429,6 +482,16 @@ function similarity(a: string, b: string): number {
 export function normalizeItem(rawName: string): NormalizedItem {
   const normalizedName = clean(rawName);
 
+  // --- Condiment check: filter before any food matching ---
+  if (checkIsCondiment(normalizedName)) {
+    return {
+      normalizedName,
+      canonicalFood: null,
+      category: null,
+      isCondiment: true,
+    };
+  }
+
   // --- Pass 1: keyword / substring matching ---
   for (const [canonical, synonyms] of Object.entries(FOOD_SYNONYMS)) {
     for (const synonym of synonyms) {
@@ -437,7 +500,7 @@ export function normalizeItem(rawName: string): NormalizedItem {
           normalizedName,
           canonicalFood: canonical,
           category: FOOD_CATEGORIES[canonical] ?? null,
-          confidence: 1,
+          isCondiment: false,
         };
       }
     }
@@ -463,7 +526,7 @@ export function normalizeItem(rawName: string): NormalizedItem {
       normalizedName,
       canonicalFood: bestCanonical,
       category: FOOD_CATEGORIES[bestCanonical] ?? null,
-      confidence: Math.round(bestScore * 0.9 * 100) / 100,
+      isCondiment: false,
     };
   }
 
@@ -471,7 +534,7 @@ export function normalizeItem(rawName: string): NormalizedItem {
     normalizedName,
     canonicalFood: null,
     category: null,
-    confidence: 0,
+    isCondiment: false,
   };
 }
 
