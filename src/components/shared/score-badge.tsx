@@ -12,10 +12,10 @@ export function ScoreBadge({ score, max = 100, size = "md", className }: ScoreBa
 
   const colorClass =
     pct >= 65
-      ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
+      ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 ring-emerald-200 dark:ring-emerald-800"
       : pct >= 35
-        ? "bg-amber-50 text-amber-700 ring-amber-200"
-        : "bg-red-50 text-red-700 ring-red-200";
+        ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 ring-amber-200 dark:ring-amber-800"
+        : "bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 ring-red-200 dark:ring-red-800";
 
   const sizeClass =
     size === "sm"

@@ -38,7 +38,7 @@ export function HallCard({
                   ? "bg-gray-800 text-white"
                   : rank === 3
                     ? "bg-amber-600 text-white"
-                    : "bg-gray-100 text-gray-600"
+                    : "bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-zinc-400"
             )}
           >
             #{rank}
@@ -47,7 +47,7 @@ export function HallCard({
           {/* Info */}
           <div className="flex-1 min-w-0 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <h3 className="truncate text-base font-semibold text-gray-900">
+              <h3 className="truncate text-base font-semibold text-gray-900 dark:text-white">
                 {hallName}
               </h3>
               <ScoreBadge score={score} />
@@ -69,7 +69,7 @@ export function HallCard({
                 </Badge>
               ))}
               {matchedItems.length > 3 && (
-                <span className="text-[10px] text-gray-400">
+                <span className="text-[10px] text-gray-400 dark:text-zinc-500">
                   +{matchedItems.length - 3} more
                 </span>
               )}
@@ -77,7 +77,7 @@ export function HallCard({
           </div>
 
           {/* Arrow */}
-          <ChevronRight className="h-5 w-5 shrink-0 text-gray-300 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-gray-500" />
+          <ChevronRight className="h-5 w-5 shrink-0 text-gray-300 dark:text-zinc-600 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-gray-500 dark:group-hover:text-zinc-400" />
         </CardContent>
       </Card>
     </Link>

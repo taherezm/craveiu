@@ -95,7 +95,7 @@ export function PreferenceForm({ onSaved }: { onSaved?: () => void }) {
 
       {/* Dietary preferences */}
       <div>
-        <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-gray-400">
+        <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-gray-400 dark:text-zinc-500">
           Dietary
         </h3>
         <div className="space-y-3">
@@ -108,7 +108,7 @@ export function PreferenceForm({ onSaved }: { onSaved?: () => void }) {
             ] as const
           ).map(({ key, label }) => (
             <div key={key} className="flex items-center justify-between">
-              <span className="text-sm font-medium text-gray-700">{label}</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-zinc-200">{label}</span>
               <Switch
                 checked={dietary[key]}
                 onCheckedChange={(v) => setDietary((d) => ({ ...d, [key]: v }))}

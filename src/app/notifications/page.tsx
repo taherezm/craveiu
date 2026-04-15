@@ -75,8 +75,8 @@ export default function NotificationsPage() {
     <div className="mx-auto max-w-xl px-4 py-8 sm:px-6">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Food alerts</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Food alerts</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">
             Get notified when your favourite food appears on the menu.
           </p>
         </div>
@@ -91,16 +91,16 @@ export default function NotificationsPage() {
 
       {/* Add form */}
       {showForm && (
-        <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div className="mb-6 rounded-2xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-800">New food alert</h3>
+            <h3 className="font-semibold text-gray-800 dark:text-zinc-100">New food alert</h3>
             <button onClick={() => setShowForm(false)}>
-              <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+              <X className="h-4 w-4 text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300" />
             </button>
           </div>
 
           <div className="mb-3">
-            <label className="mb-1.5 block text-xs font-medium text-gray-600">
+            <label className="mb-1.5 block text-xs font-medium text-gray-600 dark:text-zinc-400">
               Food item
             </label>
             <input
@@ -108,7 +108,7 @@ export default function NotificationsPage() {
               value={foodName}
               onChange={(e) => setFoodName(e.target.value)}
               placeholder="e.g. chicken tenders"
-              className="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm outline-none transition focus:border-[#990000] focus:ring-2 focus:ring-[#990000]/10"
+              className="w-full rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3.5 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 outline-none transition focus:border-[#990000] focus:ring-2 focus:ring-[#990000]/10"
               onKeyDown={(e) => e.key === "Enter" && addAlert()}
             />
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -116,7 +116,7 @@ export default function NotificationsPage() {
                 <button
                   key={f}
                   onClick={() => setFoodName(f)}
-                  className="rounded-full border border-gray-200 px-2.5 py-0.5 text-xs text-gray-600 hover:border-gray-300 hover:bg-gray-50"
+                  className="rounded-full border border-gray-200 dark:border-zinc-700 px-2.5 py-0.5 text-xs text-gray-600 dark:text-zinc-400 hover:border-gray-300 dark:hover:border-zinc-500 hover:bg-gray-50 dark:hover:bg-zinc-800"
                 >
                   {f}
                 </button>
@@ -125,13 +125,13 @@ export default function NotificationsPage() {
           </div>
 
           <div className="mb-4">
-            <label className="mb-1.5 block text-xs font-medium text-gray-600">
+            <label className="mb-1.5 block text-xs font-medium text-gray-600 dark:text-zinc-400">
               Hall (optional)
             </label>
             <select
               value={hallSlug}
               onChange={(e) => setHallSlug(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm outline-none transition focus:border-[#990000]"
+              className="w-full rounded-xl border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white px-3.5 py-2.5 text-sm outline-none transition focus:border-[#990000]"
             >
               <option value="any">Any hall</option>
               {DINING_HALLS.map((h) => (
@@ -154,10 +154,10 @@ export default function NotificationsPage() {
 
       {/* Alert list */}
       {alerts.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center">
-          <Bell className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-sm font-medium text-gray-500">No alerts yet.</p>
-          <p className="mt-1 text-xs text-gray-400">
+        <div className="rounded-2xl border border-dashed border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900 p-10 text-center">
+          <Bell className="mx-auto mb-3 h-8 w-8 text-gray-300 dark:text-zinc-600" />
+          <p className="text-sm font-medium text-gray-500 dark:text-zinc-400">No alerts yet.</p>
+          <p className="mt-1 text-xs text-gray-400 dark:text-zinc-500">
             Add an alert to be notified when your favorite food is being served.
           </p>
         </div>
@@ -170,17 +170,17 @@ export default function NotificationsPage() {
             return (
               <div
                 key={alert.id}
-                className={`flex items-center justify-between rounded-2xl border bg-white p-4 transition-all ${
-                  alert.active ? "border-gray-100 shadow-sm" : "border-gray-100 opacity-50"
+                className={`flex items-center justify-between rounded-2xl border bg-white dark:bg-zinc-900 p-4 transition-all ${
+                  alert.active ? "border-gray-100 dark:border-zinc-800 shadow-sm" : "border-gray-100 dark:border-zinc-800 opacity-50"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`h-2 w-2 rounded-full ${alert.active ? "bg-emerald-400" : "bg-gray-300"}`} />
+                  <div className={`h-2 w-2 rounded-full ${alert.active ? "bg-emerald-400" : "bg-gray-300 dark:bg-zinc-600"}`} />
                   <div>
-                    <p className="text-sm font-medium text-gray-800 capitalize">
+                    <p className="text-sm font-medium text-gray-800 dark:text-zinc-100 capitalize">
                       {alert.foodName}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-gray-400 dark:text-zinc-500">
                       {hall ? hall.name : "Any dining hall"}
                     </p>
                   </div>
@@ -188,7 +188,7 @@ export default function NotificationsPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => toggleAlert(alert.id)}
-                    className="text-gray-400 transition hover:text-gray-600"
+                    className="text-gray-400 dark:text-zinc-500 transition hover:text-gray-600 dark:hover:text-zinc-300"
                     title={alert.active ? "Pause alert" : "Resume alert"}
                   >
                     {alert.active ? (
@@ -199,7 +199,7 @@ export default function NotificationsPage() {
                   </button>
                   <button
                     onClick={() => deleteAlert(alert.id)}
-                    className="text-gray-300 transition hover:text-red-500"
+                    className="text-gray-300 dark:text-zinc-600 transition hover:text-red-500"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -210,7 +210,7 @@ export default function NotificationsPage() {
         </div>
       )}
 
-      <p className="mt-6 text-center text-xs text-gray-400">
+      <p className="mt-6 text-center text-xs text-gray-400 dark:text-zinc-500">
         Push notifications coming soon — alerts check on page load for now.
       </p>
     </div>

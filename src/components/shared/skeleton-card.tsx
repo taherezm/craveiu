@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkeletonCard() {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
       <div className="flex items-center gap-4">
         <Skeleton className="h-10 w-10 rounded-full" />
         <div className="flex-1 space-y-2">
@@ -25,7 +25,7 @@ export function SkeletonCard() {
 
 export function SkeletonBestMatch() {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8">
+    <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm sm:p-8">
       <div className="mb-2 flex items-start justify-between">
         <div className="space-y-2">
           <Skeleton className="h-3 w-28" />

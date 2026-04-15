@@ -49,8 +49,8 @@ export default function AdminPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">System status</h1>
-          <p className="mt-1 text-sm text-gray-500">Ingestion health &amp; menu sync monitor.</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">System status</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-zinc-400">Ingestion health &amp; menu sync monitor.</p>
         </div>
         <button
           onClick={triggerSync}
@@ -65,8 +65,8 @@ export default function AdminPage() {
       {isLoading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse rounded-2xl border border-gray-100 bg-white p-5">
-              <div className="h-4 w-40 rounded bg-gray-100" />
+            <div key={i} className="animate-pulse rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+              <div className="h-4 w-40 rounded bg-gray-100 dark:bg-zinc-800" />
             </div>
           ))}
         </div>
@@ -74,48 +74,48 @@ export default function AdminPage() {
         <>
           {/* Summary cards */}
           <div className="mb-6 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium text-gray-400">Source health</p>
+            <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
+              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500">Source health</p>
               <div className="mt-2 flex items-center gap-2">
                 {status.sourceHealth ? (
                   <CheckCircle className="h-5 w-5 text-emerald-500" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-500" />
                 )}
-                <span className="font-semibold text-gray-800">
+                <span className="font-semibold text-gray-800 dark:text-zinc-100">
                   {status.sourceHealth ? "Healthy" : "Degraded"}
                 </span>
               </div>
             </div>
-            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium text-gray-400">Total items today</p>
-              <p className="mt-2 text-2xl font-bold text-gray-900">{status.totalItems}</p>
+            <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
+              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500">Total items today</p>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{status.totalItems}</p>
             </div>
-            <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
-              <p className="text-xs font-medium text-gray-400">Avg parse confidence</p>
-              <p className="mt-2 text-2xl font-bold text-gray-900">
+            <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
+              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500">Avg parse confidence</p>
+              <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
                 {Math.round(status.avgConfidence * 100)}%
               </p>
             </div>
           </div>
 
           {/* Per-hall status */}
-          <div className="mb-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
-            <div className="border-b border-gray-100 px-5 py-4">
-              <h2 className="text-sm font-semibold text-gray-700">Hall sync status</h2>
+          <div className="mb-6 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+            <div className="border-b border-gray-100 dark:border-zinc-800 px-5 py-4">
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-zinc-200">Hall sync status</h2>
             </div>
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-gray-50 dark:divide-zinc-800">
               {status.hallStatus.map((hall) => (
                 <div key={hall.hallName} className="flex items-center justify-between px-5 py-3.5">
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{hall.hallName}</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-sm font-medium text-gray-800 dark:text-zinc-100">{hall.hallName}</p>
+                    <p className="text-xs text-gray-400 dark:text-zinc-500">
                       Last sync: {hall.lastSync ? formatTimeAgo(new Date(hall.lastSync)) : "never"}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-gray-700">{hall.itemCount} items</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-zinc-200">{hall.itemCount} items</p>
+                    <p className="text-xs text-gray-400 dark:text-zinc-500">
                       {Math.round(hall.confidence * 100)}% confidence
                     </p>
                   </div>
@@ -125,11 +125,11 @@ export default function AdminPage() {
           </div>
 
           {/* Recent logs */}
-          <div className="rounded-2xl border border-gray-100 bg-white shadow-sm">
-            <div className="border-b border-gray-100 px-5 py-4">
-              <h2 className="text-sm font-semibold text-gray-700">Recent ingestion logs</h2>
+          <div className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+            <div className="border-b border-gray-100 dark:border-zinc-800 px-5 py-4">
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-zinc-200">Recent ingestion logs</h2>
             </div>
-            <div className="divide-y divide-gray-50">
+            <div className="divide-y divide-gray-50 dark:divide-zinc-800">
               {status.recentLogs.map((log) => (
                 <div key={log.id} className="flex items-start gap-3 px-5 py-3.5">
                   {log.status === "success" ? (
@@ -140,14 +140,14 @@ export default function AdminPage() {
                     <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-gray-800">{log.hallName}</p>
+                    <p className="text-sm font-medium text-gray-800 dark:text-zinc-100">{log.hallName}</p>
                     {log.error && (
                       <p className="mt-0.5 truncate text-xs text-red-500">{log.error}</p>
                     )}
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-xs font-medium text-gray-600">{log.itemCount} items</p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs font-medium text-gray-600 dark:text-zinc-300">{log.itemCount} items</p>
+                    <p className="text-xs text-gray-400 dark:text-zinc-500">
                       {formatTimeAgo(new Date(log.createdAt))}
                     </p>
                   </div>
@@ -157,9 +157,9 @@ export default function AdminPage() {
           </div>
         </>
       ) : (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center">
-          <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-sm text-gray-500">No status data available.</p>
+        <div className="rounded-2xl border border-dashed border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900 p-10 text-center">
+          <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300 dark:text-zinc-600" />
+          <p className="text-sm text-gray-500 dark:text-zinc-400">No status data available.</p>
         </div>
       )}
     </div>

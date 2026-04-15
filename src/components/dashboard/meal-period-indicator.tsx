@@ -75,7 +75,7 @@ export function MealPeriodIndicator() {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3.5 py-2 text-sm shadow-sm">
+    <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3.5 py-2 text-sm shadow-sm">
       {/* Status dot */}
       <span className="relative flex h-2.5 w-2.5">
         {info.isServing && (
@@ -84,16 +84,16 @@ export function MealPeriodIndicator() {
         <span
           className={cn(
             "relative inline-flex h-2.5 w-2.5 rounded-full",
-            info.isServing ? "bg-emerald-500" : "bg-gray-300"
+            info.isServing ? "bg-emerald-500" : "bg-gray-300 dark:bg-zinc-600"
           )}
         />
       </span>
 
-      <span className="font-medium text-gray-900">
+      <span className="font-medium text-gray-900 dark:text-white">
         {info.period ?? "Closed"}
       </span>
 
-      <span className="flex items-center gap-1 text-gray-400">
+      <span className="flex items-center gap-1 text-gray-400 dark:text-zinc-500">
         <Clock className="h-3.5 w-3.5" />
         <span className="text-xs">
           {info.isServing

@@ -10,13 +10,13 @@ const badgeVariants = cva(
         default:
           "border-transparent bg-[#990000] text-white",
         secondary:
-          "border-transparent bg-gray-100 text-gray-800",
+          "border-transparent bg-gray-100 dark:bg-zinc-800 text-gray-800 dark:text-zinc-200",
         destructive:
-          "border-transparent bg-red-100 text-red-800",
+          "border-transparent bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400",
         outline:
-          "border-gray-300 text-gray-700",
+          "border-gray-300 dark:border-zinc-600 text-gray-700 dark:text-zinc-300",
         success:
-          "border-transparent bg-emerald-100 text-emerald-800",
+          "border-transparent bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400",
       },
     },
     defaultVariants: {

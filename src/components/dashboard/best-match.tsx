@@ -35,7 +35,7 @@ export function BestMatch({
   return (
     <Card
       className={cn(
-        "relative overflow-hidden border-[#990000]/20 bg-gradient-to-br from-white to-red-50/50 transition-all duration-700 ease-out",
+        "relative overflow-hidden border-[#990000]/20 bg-gradient-to-br from-white dark:from-zinc-900 to-red-50/50 dark:to-zinc-900 transition-all duration-700 ease-out",
         visible
           ? "translate-y-0 opacity-100"
           : "translate-y-4 opacity-0"
@@ -62,7 +62,7 @@ export function BestMatch({
             <span className="text-4xl font-bold text-[#990000]">
               {score}%
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-zinc-400">
               {confidence}% confidence
             </span>
           </div>
@@ -70,11 +70,11 @@ export function BestMatch({
         </div>
 
         {/* Explanation */}
-        <p className="text-sm leading-relaxed text-gray-600">{explanation}</p>
+        <p className="text-sm leading-relaxed text-gray-600 dark:text-zinc-400">{explanation}</p>
 
         {/* Matched items */}
         <div className="space-y-2">
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-zinc-500">
             Matched items
           </h4>
           <div className="flex flex-wrap gap-2">

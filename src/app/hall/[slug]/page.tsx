@@ -59,7 +59,7 @@ export default function HallDetailPage({ params }: PageProps) {
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
       <Link
         href="/dashboard"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm text-gray-500 transition-colors hover:text-gray-800"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-zinc-400 transition-colors hover:text-gray-800 dark:hover:text-white"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to rankings
@@ -67,20 +67,20 @@ export default function HallDetailPage({ params }: PageProps) {
 
       {/* Hall header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{hall.name}</h1>
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">{hall.name}</h1>
+        <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-zinc-400">
           <span className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" />
             {hall.location}
           </span>
         </div>
         {hall.description && (
-          <p className="mt-2 text-sm text-gray-600">{hall.description}</p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-zinc-400">{hall.description}</p>
         )}
       </div>
 
       {/* Meal period tabs */}
-      <div className="mb-6 flex gap-1 rounded-xl bg-gray-100 p-1">
+      <div className="mb-6 flex gap-1 rounded-xl bg-gray-100 dark:bg-zinc-800 p-1">
         {MEAL_PERIODS.map((period) => (
           <button
             key={period.key}
@@ -88,8 +88,8 @@ export default function HallDetailPage({ params }: PageProps) {
             className={cn(
               "flex-1 rounded-lg py-2 text-sm font-medium transition-all",
               activePeriod === period.key
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-500 hover:text-gray-700",
+                ? "bg-white dark:bg-zinc-700 text-gray-900 dark:text-white shadow-sm"
+                : "text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-zinc-200",
             )}
           >
             {period.label}
@@ -101,11 +101,11 @@ export default function HallDetailPage({ params }: PageProps) {
       {isLoading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse rounded-2xl border border-gray-100 bg-white p-5">
-              <div className="mb-3 h-4 w-32 rounded bg-gray-100" />
+            <div key={i} className="animate-pulse rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+              <div className="mb-3 h-4 w-32 rounded bg-gray-100 dark:bg-zinc-800" />
               <div className="space-y-2">
                 {[1, 2, 3, 4].map((j) => (
-                  <div key={j} className="h-3 w-full rounded bg-gray-100" />
+                  <div key={j} className="h-3 w-full rounded bg-gray-100 dark:bg-zinc-800" />
                 ))}
               </div>
             </div>
@@ -116,9 +116,9 @@ export default function HallDetailPage({ params }: PageProps) {
           {currentMenu.stations.map((station) => (
             <div
               key={station.name}
-              className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm"
+              className="rounded-2xl border border-gray-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm"
             >
-              <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400">
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-zinc-500">
                 {station.name}
               </h3>
               <ul className="space-y-1.5">
@@ -133,26 +133,26 @@ export default function HallDetailPage({ params }: PageProps) {
                       key={idx}
                       className={cn(
                         "flex items-center justify-between rounded-lg px-2 py-1.5 text-sm",
-                        isMatch ? "bg-emerald-50" : "hover:bg-gray-50",
+                        isMatch ? "bg-emerald-50 dark:bg-emerald-900/20" : "hover:bg-gray-50 dark:hover:bg-zinc-800",
                       )}
                     >
-                      <span className={cn("font-medium", isMatch ? "text-emerald-800" : "text-gray-800")}>
+                      <span className={cn("font-medium", isMatch ? "text-emerald-800 dark:text-emerald-400" : "text-gray-800 dark:text-zinc-200")}>
                         {isMatch && <span className="mr-1.5">★</span>}
                         {item.name}
                       </span>
                       <div className="flex shrink-0 items-center gap-2">
                         {item.isVegetarian && (
-                          <span className="rounded-full bg-green-50 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
+                          <span className="rounded-full bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 text-[10px] font-medium text-green-700 dark:text-green-400">
                             V
                           </span>
                         )}
                         {item.isVegan && (
-                          <span className="rounded-full bg-green-100 px-1.5 py-0.5 text-[10px] font-medium text-green-800">
+                          <span className="rounded-full bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 text-[10px] font-medium text-green-800 dark:text-green-400">
                             VG
                           </span>
                         )}
                         {item.calories != null && (
-                          <span className="text-xs text-gray-400">{item.calories} cal</span>
+                          <span className="text-xs text-gray-400 dark:text-zinc-500">{item.calories} cal</span>
                         )}
                       </div>
                     </li>
@@ -163,9 +163,9 @@ export default function HallDetailPage({ params }: PageProps) {
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center">
-          <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          <p className="text-sm font-medium text-gray-500">
+        <div className="rounded-2xl border border-dashed border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900 p-10 text-center">
+          <Clock className="mx-auto mb-3 h-8 w-8 text-gray-300 dark:text-zinc-600" />
+          <p className="text-sm font-medium text-gray-500 dark:text-zinc-400">
             No menu available for {PERIOD_LABELS[activePeriod]}.
           </p>
         </div>
